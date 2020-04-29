@@ -1,11 +1,11 @@
-CREATE FUNCTION  gds .pl_insert_salle (un_nom varchar ( 250 ), un_nb_personne_max int ) RETURNS gds . salle  AS $$
+CREATE FUNCTION gds.pl_insert_salle (un_nom varchar(250),un_nb_personne_max integer) RETURNS gds.salle AS $$
 DECLARE 
-    une_salle gds . salle % ROWTYPE;
+    nouvelle_salle gds.salle%ROWTYPE;
 BEGIN 
-    INSERT DANS  gds . salle (nom, nb_personnes_max, date_creation, date_modification, id)
-    VALUES (un_nom, un_nb_personne_max, now (), now (), nextval ( ' gds.salle_seq ' ))
-	RETURN * DANS UNE_salle;
+    INSERT INTO gds.salle (nom,nb_personnes_max,date_creation,date_modification,id)
+    VALUES (un_nom,un_nb_personne_max,now(),now(),nextval('gds.salle_seq'))
+	RETURNING * INTO nouvelle_salle;
 
-    RETURN une_salle;
+    RETURN nouvelle_salle;
 END;
-$$ LANGUAGE plpgsql 
+$$ LANGUAGE plpgsql
